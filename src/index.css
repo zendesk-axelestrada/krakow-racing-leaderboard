@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-racing-darker text-white font-formula;
+  }
+}
+
+/* Custom scrollbar for dropdown menu */
+.custom-dropdown-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-dropdown-menu::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.custom-dropdown-menu::-webkit-scrollbar-thumb {
+  background: rgba(147, 51, 234, 0.5);
+  border-radius: 4px;
+}
+
+.custom-dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: rgba(147, 51, 234, 0.7);
+}
