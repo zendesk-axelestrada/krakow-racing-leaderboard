@@ -1,0 +1,16 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Top left quarter circle -->
+  <path d="M72 88C72 105.673 86.3269 120 104 120H132V88C132 70.3269 117.673 56 100 56H72V88Z" fill="white"/>
+
+  <!-- Top right triangle -->
+  <path d="M132 88V120H184L132 56V88Z" fill="white"/>
+
+  <!-- Bottom left triangle -->
+  <path d="M72 168V136H72L124 200H72V168Z" fill="white"/>
+
+  <!-- Bottom right quarter circle -->
+  <path d="M124 200C124 182.327 138.327 168 156 168H184V200C184 217.673 169.673 232 152 232H124V200Z" fill="white"/>
+
+  <!-- Vertical bar in the middle -->
+  <path d="M124 88H132V168H124V88Z" fill="white"/>
+</svg>
