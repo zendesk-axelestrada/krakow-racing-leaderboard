@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import TrackSelector from './components/TrackSelector';
 import LeaderboardTable from './components/LeaderboardTable';
+import RaceResultsTable from './components/RaceResultsTable';
 import { tracks, getBestLapsForTrack } from './data/kartingData';
 
 function App() {
-  const [selectedTrackId, setSelectedTrackId] = useState(tracks[0]?.id || null);
+  const defaultTrackId =
+    tracks.find((t) => t.type === 'race')?.id || tracks[0]?.id || null;
+  const [selectedTrackId, setSelectedTrackId] = useState(defaultTrackId);
 
   if (!selectedTrackId) {
     return (
@@ -15,7 +18,8 @@ function App() {
   }
 
   const selectedTrack = tracks.find((t) => t.id === selectedTrackId);
-  const results = getBestLapsForTrack(selectedTrackId);
+  const isRaceTrack = selectedTrack?.type === 'race';
+  const results = isRaceTrack ? [] : getBestLapsForTrack(selectedTrackId);
 
   return (
     <div className="min-h-screen bg-racing-darker">
@@ -55,14 +59,18 @@ function App() {
         <div className="mb-6">
           <div className="flex items-baseline gap-4">
             <h2 className="text-4xl font-black text-white tracking-tight">
-              Driver standings
+              {isRaceTrack ? 'GP Results' : 'Fastest lap'}
             </h2>
           </div>
           <div className="h-1 w-20 bg-purple-500 mt-2"></div>
         </div>
 
-        {/* Leaderboard Table */}
-        <LeaderboardTable results={results} />
+        {/* Table — race weekend format or classic fastest-lap standings */}
+        {isRaceTrack ? (
+          <RaceResultsTable trackId={selectedTrackId} />
+        ) : (
+          <LeaderboardTable results={results} />
+        )}
       </main>
 
       {/* Footer */}
