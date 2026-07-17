@@ -56,7 +56,7 @@ export const participants = [
   {
     id: 'michal',
     name: 'Michał Perek',
-    racingName: null,
+    racingName: 'FastAsFcuk',
     email: 'michal.perek@zendesk.com',
     department: 'Contact Center Engineering',
     avatarUrl: 'https://avatars.slack-edge.com/2026-05-20/11169883191410_e73b14baa199e42028a7_original.png'
@@ -80,7 +80,7 @@ export const participants = [
   {
     id: 'ilya',
     name: 'Ilya Demukh',
-    racingName: null,
+    racingName: 'demuux',
     email: 'ilya.demukh@zendesk.com',
     department: 'Employee Service',
     avatarUrl: 'https://avatars.slack-edge.com/2026-04-28/11012893332866_735ea17bad3880f96489_original.jpg'
@@ -147,19 +147,17 @@ export const tracks = [
         sessionName: 'Grand Prix',
         // For race events, each result has a qualifying lap time (seconds)
         // and a race finishing position (1 = winner).
+        // 8 drivers raced. Qualifying = best lap from qualifying session (#848);
+        // racePosition = final finishing order from the race (#849).
         results: {
-          'wojciech':   { qualifying: 0, racePosition: 1 },   // Arachne
-          'axel':       { qualifying: 0, racePosition: 2 },   // Haqe
-          'bartosz':    { qualifying: 0, racePosition: 3 },   // Bako
-          'webster':    { qualifying: 0, racePosition: 4 },   // Webster
-          'rafal':      { qualifying: 0, racePosition: 5 },   // R3fiX
-          'kamil':      { qualifying: 0, racePosition: 6 },   // Jechanka
-          'dominik':    { qualifying: 0, racePosition: 7 },   // ziajka
-          'ilya':       { qualifying: 0, racePosition: 8 },   // Ilya
-          'serhii':     { qualifying: 0, racePosition: 9 },   // Serhii
-          'aleksander': { qualifying: 0, racePosition: 10 },  // Aleksander
-          'michal':     { qualifying: 0, racePosition: 11 },  // Michał
-          'pawel':      { qualifying: 0, racePosition: 12 },  // Paweł
+          'kamil':    { qualifying: 40.917, racePosition: 1 },  // Jechanka
+          'rafal':    { qualifying: 41.592, racePosition: 2 },  // R3fiX
+          'axel':     { qualifying: 41.577, racePosition: 3 },  // HAQE
+          'michal':   { qualifying: 42.087, racePosition: 4 },  // FastAsFcuk
+          'serhii':   { qualifying: 41.957, racePosition: 5 },  // Serhii
+          'wojciech': { qualifying: 42.177, racePosition: 6 },  // Arachne
+          'dominik':  { qualifying: 43.616, racePosition: 7 },  // ziajka
+          'ilya':     { qualifying: 45.324, racePosition: 8 },  // demuux
         }
       }
     ]
