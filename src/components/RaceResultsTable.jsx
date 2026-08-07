@@ -59,6 +59,13 @@ export default function RaceResultsTable({ trackId }) {
 
   return (
     <div>
+      <div className="mb-6">
+        <h2 className="text-4xl font-black text-white tracking-tight">
+          GP Results
+        </h2>
+        <div className="h-1 w-20 bg-purple-500 mt-2"></div>
+      </div>
+
       {/* Day selector + tabs */}
       <div className="flex items-center justify-between flex-wrap gap-4 mb-5">
         {/* Tabs */}

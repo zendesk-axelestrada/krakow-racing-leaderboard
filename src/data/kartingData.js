@@ -64,7 +64,7 @@ export const participants = [
   {
     id: 'pawel',
     name: 'Paweł Słota',
-    racingName: null,
+    racingName: 'ELP4BLITTO',
     email: 'pawel.slota@zendesk.com',
     department: 'WFM',
     avatarUrl: 'https://avatars.slack-edge.com/2026-06-02/11254730657507_0f73470e5e1fdeab2ba3_original.jpg'
@@ -96,7 +96,7 @@ export const participants = [
   {
     id: 'aleksander',
     name: 'Aleksander Janur',
-    racingName: null,
+    racingName: 'krzysio5',
     email: 'aleksander.janur@zendesk.com',
     department: 'Product Reliability',
     avatarUrl: 'https://avatars.slack-edge.com/2026-05-12/11102919648787_75183b1e41e7c0ccee9c_original.png'
@@ -108,6 +108,30 @@ export const participants = [
     email: 'dominik.ziajka@zendesk.com',
     department: 'Cloud Infrastructure',
     avatarUrl: 'https://avatars.slack-edge.com/2026-06-14/11354227731670_ba70c551c29f5518662a_original.jpg'
+  },
+  {
+    id: 'dawid',
+    name: 'Dawid Widyna',
+    racingName: 'widyn',
+    email: 'dawid.widyna@zendesk.com',
+    department: 'WFM',
+    avatarUrl: 'https://avatars.slack-edge.com/2026-06-02/11263802501905_bd9fdae809d1b6e73b59_original.jpg'
+  },
+  {
+    id: 'grzegorz',
+    name: 'Grzegorz Klocek',
+    racingName: 'BlockForeman',
+    email: 'grzegorz.klocek@zendesk.com',
+    department: 'WFM',
+    avatarUrl: 'https://avatars.slack-edge.com/2025-01-21/8347326970128_92bf73e6a880c37b1f5a_original.jpg'
+  },
+  {
+    id: 'juliusz',
+    name: 'Juliusz Kociński',
+    racingName: 'Julczyk',
+    email: 'juliusz.kocinski@zendesk.com',
+    department: 'WFM',
+    avatarUrl: 'https://avatars.slack-edge.com/2026-07-16/11632349783040_08ad68916bff7add16ff_original.jpg'
   },
 ];
 
@@ -122,6 +146,21 @@ export const tracks = [
     website: 'https://gokarting.com.pl/',
     location: 'Kraków, Poland',
     events: [
+      {
+        date: '2026-08-06',
+        sessionName: 'Summer Sprint',
+        // Three heats (18:00, 18:20, 19:00). Best lap per driver across all heats.
+        results: {
+          'dawid':      28.859,  // widyn - Best time!
+          'kamil':      28.924,  // Jechanka
+          'rafal':      29.234,  // R3fiX
+          'axel':       29.520,  // haqe
+          'pawel':      29.635,  // ELP4BLITTO
+          'aleksander': 30.311,  // krzysio5
+          'grzegorz':   30.534,  // BlockForeman
+          'juliusz':    30.741,  // Julczyk
+        }
+      },
       {
         date: '2026-06-28',
         sessionName: 'Wasęg',
@@ -209,6 +248,90 @@ export function getBestLapsForTrack(trackId) {
   results.sort((a, b) => a.bestLapTime - b.bestLapTime);
 
   return results;
+}
+
+/**
+ * Get the best lap for each participant within a single event, ranked fastest first.
+ * @param {string} trackId - The track ID
+ * @param {string} date - The event date (ISO string)
+ * @returns {Array} Array of results with participant info and best lap for that event
+ */
+export function getBestLapsForEvent(trackId, date) {
+  const track = tracks.find(t => t.id === trackId);
+  if (!track) return [];
+
+  const event = track.events.find(e => e.date === date);
+  if (!event) return [];
+
+  const results = Object.entries(event.results).map(([participantId, lapTime]) => {
+    const participant = participants.find(p => p.id === participantId);
+    return {
+      participantId,
+      participant,
+      bestLapTime: lapTime,
+      dateAchieved: event.date
+    };
+  });
+
+  results.sort((a, b) => a.bestLapTime - b.bestLapTime);
+
+  return results;
+}
+
+/**
+ * Get the fastest laps ever set on a circuit, across all events — the circuit
+ * records. Works for both track types: fastest-lap tracks use the raw lap time,
+ * race tracks use each driver's best qualifying lap.
+ * @param {string} trackId - The track ID
+ * @returns {Array} Best lap per driver, fastest first
+ */
+export function getCircuitRecords(trackId) {
+  const track = tracks.find(t => t.id === trackId);
+  if (!track) return [];
+
+  const participantBestLaps = {};
+
+  track.events.forEach(event => {
+    Object.entries(event.results).forEach(([participantId, value]) => {
+      // Race tracks store { qualifying, racePosition }; fastest-lap tracks store a number.
+      const lapTime = typeof value === 'number' ? value : value.qualifying;
+      if (lapTime == null) return;
+      if (!participantBestLaps[participantId] || lapTime < participantBestLaps[participantId].time) {
+        participantBestLaps[participantId] = { time: lapTime, date: event.date };
+      }
+    });
+  });
+
+  const results = Object.entries(participantBestLaps).map(([participantId, bestLap]) => ({
+    participantId,
+    participant: participants.find(p => p.id === participantId),
+    bestLapTime: bestLap.time,
+    dateAchieved: bestLap.date
+  }));
+
+  results.sort((a, b) => a.bestLapTime - b.bestLapTime);
+  return results;
+}
+
+/**
+ * Get the ID of the track with the most recent event, so the app can open on
+ * the latest race by default.
+ * @returns {string|null} Track ID with the newest event date
+ */
+export function getLatestEventTrackId() {
+  let latestTrackId = null;
+  let latestDate = null;
+
+  tracks.forEach(track => {
+    track.events.forEach(event => {
+      if (!latestDate || new Date(event.date) > new Date(latestDate)) {
+        latestDate = event.date;
+        latestTrackId = track.id;
+      }
+    });
+  });
+
+  return latestTrackId;
 }
 
 /**

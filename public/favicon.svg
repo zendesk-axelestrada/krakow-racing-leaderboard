@@ -1,22 +1,19 @@
 <svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Black rounded background -->
-  <rect width="256" height="256" rx="32" fill="#000000"/>
+  <!-- Tire rubber -->
+  <circle cx="128" cy="128" r="118" fill="#17171b"/>
 
-  <!-- Zendesk logo in white (centered and scaled) -->
-  <g transform="translate(72, 86)">
-    <!-- Top left quarter circle -->
-    <path d="M0 16C0 24.8366 7.16344 32 16 32H32V16C32 7.16344 24.8366 0 16 0H0V16Z" fill="white"/>
+  <!-- Red soft-compound band (the iconic Pirelli soft marker) -->
+  <circle cx="128" cy="128" r="104" fill="none" stroke="#e1261c" stroke-width="20"/>
 
-    <!-- Top right triangle -->
-    <path d="M32 16V32H60L32 0V16Z" fill="white"/>
+  <!-- Inner tire face -->
+  <circle cx="128" cy="128" r="82" fill="#202027"/>
 
-    <!-- Bottom left triangle -->
-    <path d="M0 56V40L26 84H0V56Z" fill="white"/>
-
-    <!-- Bottom right quarter circle -->
-    <path d="M26 84C26 75.1634 33.1634 68 42 68H58V84C58 92.8366 50.8366 100 42 100H26V84Z" fill="white"/>
-
-    <!-- Vertical bar -->
-    <path d="M26 16H32V68H26V16Z" fill="white"/>
+  <!-- Tread grooves -->
+  <g stroke="#000000" stroke-width="7" opacity="0.55">
+    <circle cx="128" cy="128" r="70" fill="none"/>
+    <circle cx="128" cy="128" r="52" fill="none"/>
   </g>
+
+  <!-- Hub opening -->
+  <circle cx="128" cy="128" r="34" fill="#101013"/>
 </svg>
