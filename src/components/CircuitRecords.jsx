@@ -1,5 +1,6 @@
 import React from 'react';
 import { formatLapTime, formatDate, getCircuitRecords } from '../data/kartingData';
+import DriverAvatar from './DriverAvatar';
 
 // Gold / silver / bronze trophy colors per podium position
 const TROPHY_COLOR = {
@@ -40,10 +41,10 @@ export default function CircuitRecords({ trackId }) {
               className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-4 flex items-center gap-3"
             >
               <Trophy color={TROPHY_COLOR[position]} />
-              <img
-                src={record.participant.avatarUrl}
-                alt={record.participant.name}
-                className="w-10 h-10 rounded-full border-2 border-white/20 shrink-0"
+              <DriverAvatar
+                name={record.participant.name}
+                avatarUrl={record.participant.avatarUrl}
+                className="w-10 h-10 rounded-full border-2 border-white/20 text-xs shrink-0"
               />
               <div className="min-w-0">
                 <div className="text-white font-bold text-sm leading-tight truncate">

@@ -6,6 +6,7 @@ import {
   getRaceResultsForEvent,
   getQualifyingForEvent,
 } from '../data/kartingData';
+import DriverAvatar from './DriverAvatar';
 
 const TABS = [
   { id: 'race', label: 'Race results' },
@@ -22,10 +23,10 @@ function getPositionBadgeColor(position) {
 function DriverCell({ participant }) {
   return (
     <div className="flex items-center gap-3">
-      <img
-        src={participant.avatarUrl}
-        alt={participant.name}
-        className="w-10 h-10 rounded-full border-2 border-white/20"
+      <DriverAvatar
+        name={participant.name}
+        avatarUrl={participant.avatarUrl}
+        className="w-10 h-10 rounded-full border-2 border-white/20 text-xs shrink-0"
       />
       <div>
         <div className="text-white font-bold text-base leading-tight">

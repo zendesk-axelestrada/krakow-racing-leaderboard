@@ -5,6 +5,7 @@ import {
   getEventDatesForTrack,
   getBestLapsForEvent,
 } from '../data/kartingData';
+import DriverAvatar from './DriverAvatar';
 
 export default function LeaderboardTable({ trackId }) {
   const dates = getEventDatesForTrack(trackId);
@@ -101,10 +102,10 @@ export default function LeaderboardTable({ trackId }) {
                   {/* Driver Info */}
                   <td className="py-4 px-6">
                     <div className="flex items-center gap-3">
-                      <img
-                        src={result.participant.avatarUrl}
-                        alt={result.participant.name}
-                        className="w-10 h-10 rounded-full border-2 border-white/20"
+                      <DriverAvatar
+                        name={result.participant.name}
+                        avatarUrl={result.participant.avatarUrl}
+                        className="w-10 h-10 rounded-full border-2 border-white/20 text-xs shrink-0"
                       />
                       <div>
                         <div className="text-white font-bold text-base leading-tight">

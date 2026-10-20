@@ -1,5 +1,6 @@
 import React from 'react';
 import { formatLapTime } from '../data/kartingData';
+import DriverAvatar from './DriverAvatar';
 
 export default function PodiumSection({ topThree }) {
   if (!topThree || topThree.length === 0) {
@@ -42,10 +43,10 @@ export default function PodiumSection({ topThree }) {
 
                   {/* Avatar */}
                   <div className="relative mb-4">
-                    <img
-                      src={result.participant.avatarUrl}
-                      alt={result.participant.name}
-                      className="w-20 h-20 rounded-full mx-auto border-4 border-white/20"
+                    <DriverAvatar
+                      name={result.participant.name}
+                      avatarUrl={result.participant.avatarUrl}
+                      className="w-20 h-20 rounded-full mx-auto border-4 border-white/20 text-lg"
                     />
                   </div>
 

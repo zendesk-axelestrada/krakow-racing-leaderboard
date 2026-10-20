@@ -19,7 +19,7 @@ export const participants = [
     racingName: 'haqe',
     email: 'axel.estrada@zendesk.com',
     department: 'Product Design',
-    avatarUrl: 'https://avatars.slack-edge.com/2026-01-09/10257347078579_4792e8e92d3a17c73a7f_original.jpg'
+    avatarUrl: 'https://ca.slack-edge.com/E030MJJ0BQF-U08PPUSV0AJ-9d8883c4b5c3-512'
   },
   {
     id: 'wojciech',
@@ -112,7 +112,7 @@ export const participants = [
   {
     id: 'dawid',
     name: 'Dawid Widyna',
-    racingName: 'widyn',
+    racingName: 'Widynek',
     email: 'dawid.widyna@zendesk.com',
     department: 'WFM',
     avatarUrl: 'https://avatars.slack-edge.com/2026-06-02/11263802501905_bd9fdae809d1b6e73b59_original.jpg'
@@ -132,6 +132,62 @@ export const participants = [
     email: 'juliusz.kocinski@zendesk.com',
     department: 'WFM',
     avatarUrl: 'https://avatars.slack-edge.com/2026-07-16/11632349783040_08ad68916bff7add16ff_original.jpg'
+  },
+  {
+    id: 'mikolaj',
+    name: 'Mikołaj Winiarski',
+    racingName: 'Mikołaj',
+    email: 'mikolaj.winiarski@zendesk.com',
+    department: 'WFM',
+    avatarUrl: 'https://ca.slack-edge.com/E030MJJ0BQF-U071FCXAJPL-f43fb9548ca4-512'
+  },
+  {
+    id: 'lucjan',
+    name: 'Lucjan Sosna',
+    racingName: 'Sosnek',
+    email: 'lucjan.sosna@zendesk.com',
+    department: 'WFM',
+    avatarUrl: 'https://ca.slack-edge.com/E030MJJ0BQF-U09JGC14CFJ-fdd137a6d9a5-512'
+  },
+  {
+    id: 'kraszkiewicz',
+    name: 'Dawid Kraszkiewicz',
+    racingName: 'Dawid',
+    email: 'dawid.kraszkiewicz@zendesk.com',
+    department: 'WFM',
+    avatarUrl: 'https://ca.slack-edge.com/E030MJJ0BQF-U0BE5MHE44S-29ca74ca85d3-512'
+  },
+  {
+    id: 'daniil',
+    name: 'Daniil Trishkin',
+    racingName: 'Kernel Pryanic',
+    email: 'daniil.trishkin@zendesk.com',
+    department: 'WFM',
+    avatarUrl: 'https://ca.slack-edge.com/E030MJJ0BQF-U0BKW8645LK-8047639f535d-512'
+  },
+  {
+    id: 'andrey',
+    name: 'Andrey Peshko',
+    racingName: 'Andrey Red Bull',
+    email: 'andrey.peshko@zendesk.com',
+    department: 'WFM',
+    avatarUrl: 'https://ca.slack-edge.com/E030MJJ0BQF-U0147BZAZ0V-26b37412bb89-512'
+  },
+  {
+    id: 'damian',
+    name: 'Damian Binek',
+    racingName: 'Blindas',
+    email: 'damian.binek@zendesk.com',
+    department: 'Product Reliability',
+    avatarUrl: 'https://ca.slack-edge.com/E030MJJ0BQF-U0B0X270NGY-c16de8a5ee04-512'
+  },
+  {
+    id: 'nazar',
+    name: 'Nazar Protsaylo',
+    racingName: 'politaku',
+    email: 'nazar.protsaylo@zendesk.com',
+    department: 'WFM',
+    avatarUrl: 'https://ca.slack-edge.com/E030MJJ0BQF-U0BL64UN8S0-70d889acd819-512'
   },
 ];
 
@@ -197,6 +253,27 @@ export const tracks = [
           'wojciech': { qualifying: 42.177, racePosition: 6 },  // Arachne
           'dominik':  { qualifying: 43.616, racePosition: 7 },  // ziajka
           'ilya':     { qualifying: 45.324, racePosition: 8 },  // demuux
+        }
+      },
+      {
+        date: '2026-10-19',
+        // Qualifying = best lap from qualifying session (#627, 18:20);
+        // racePosition = finishing order from the race (#628, 18:50).
+        // Kernel Pryanic, Andrey Red Bull, and politaku qualified but
+        // are not on the race sheet.
+        results: {
+          'dawid':        { qualifying: 40.671, racePosition: 1 },     // Widynek
+          'mikolaj':      { qualifying: 41.146, racePosition: 2 },     // Mikołaj
+          'pawel':        { qualifying: 41.437, racePosition: 3 },     // ELP4BLITTO
+          'wojciech':     { qualifying: 41.655, racePosition: 4 },     // Arachne
+          'kraszkiewicz': { qualifying: 41.822, racePosition: 5 },     // Dawid
+          'axel':         { qualifying: 41.613, racePosition: 6 },     // HAQE
+          'lucjan':       { qualifying: 41.808, racePosition: 7 },     // Sosnek
+          'aleksander':   { qualifying: 41.988, racePosition: 8 },     // Krzysio5
+          'damian':       { qualifying: 42.317, racePosition: 9 },     // Blindas
+          'daniil':       { qualifying: 42.762, racePosition: null },  // Kernel Pryanic
+          'andrey':       { qualifying: 43.194, racePosition: null },  // Andrey Red Bull
+          'nazar':        { qualifying: 44.133, racePosition: null },  // politaku
         }
       }
     ]
@@ -347,8 +424,21 @@ export function getEventDatesForTrack(trackId) {
     .sort((a, b) => new Date(b) - new Date(a));
 }
 
+function mapEventResult(event, participantId, data) {
+  const participant = participants.find(p => p.id === participantId);
+  return {
+    participantId,
+    participant,
+    qualifyingTime: data.qualifying,
+    racePosition: data.racePosition,
+    points: data.racePosition == null ? 0 : (RACE_POINTS[data.racePosition - 1] || 0),
+    date: event.date
+  };
+}
+
 /**
  * Get the race results for a specific track event, ranked by finishing position.
+ * Drivers with no race position are omitted (they still appear in qualifying).
  * Used for "race" type tracks that have qualifying + race data.
  * @param {string} trackId - The track ID
  * @param {string} date - The event date (ISO string)
@@ -362,17 +452,10 @@ export function getRaceResultsForEvent(trackId, date) {
   const event = track.events.find(e => e.date === date);
   if (!event) return [];
 
-  const results = Object.entries(event.results).map(([participantId, data]) => {
-    const participant = participants.find(p => p.id === participantId);
-    return {
-      participantId,
-      participant,
-      qualifyingTime: data.qualifying,
-      racePosition: data.racePosition,
-      points: RACE_POINTS[data.racePosition - 1] || 0,
-      date: event.date
-    };
-  });
+  // Drivers who only qualified (racePosition null) stay off the race ranking and score no points.
+  const results = Object.entries(event.results)
+    .filter(([, data]) => data.racePosition != null)
+    .map(([participantId, data]) => mapEventResult(event, participantId, data));
 
   // Sort by race finishing position (winner first)
   results.sort((a, b) => a.racePosition - b.racePosition);
@@ -382,14 +465,24 @@ export function getRaceResultsForEvent(trackId, date) {
 
 /**
  * Get the qualifying order for a specific track event (fastest lap first).
+ * Includes drivers who qualified but did not start the race.
  * @param {string} trackId - The track ID
  * @param {string} date - The event date (ISO string)
  * @returns {Array} Results ordered by qualifying time with grid position
  */
 export function getQualifyingForEvent(trackId, date) {
-  const results = getRaceResultsForEvent(trackId, date);
-  const sorted = [...results].sort((a, b) => a.qualifyingTime - b.qualifyingTime);
-  return sorted.map((r, index) => ({ ...r, gridPosition: index + 1 }));
+  const track = tracks.find(t => t.id === trackId);
+  if (!track) return [];
+
+  const event = track.events.find(e => e.date === date);
+  if (!event) return [];
+
+  const results = Object.entries(event.results)
+    .filter(([, data]) => data.qualifying != null)
+    .map(([participantId, data]) => mapEventResult(event, participantId, data));
+
+  results.sort((a, b) => a.qualifyingTime - b.qualifyingTime);
+  return results.map((r, index) => ({ ...r, gridPosition: index + 1 }));
 }
 
 /**
